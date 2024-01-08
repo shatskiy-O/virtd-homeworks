@@ -28,6 +28,10 @@ Hey, Netology
 - Соберите и отправьте созданный образ в свой dockerhub-репозитории c tag 1.0.0 . 
 - Предоставьте ответ в виде ссылки на https://hub.docker.com/<username_repo>/custom-nginx/general .
 
+## Ответ 1
+
+[docker hub](https://hub.docker.com/repository/docker/shatskiyo/custom-nginx/general))
+
 ## Задача 2
 1. Запустите ваш образ custom-nginx:1.0.0 командой docker run в соответвии с требованиями:
 - имя контейнера "ФИО-custom-nginx-t2"
@@ -39,6 +43,9 @@ Hey, Netology
 
 В качестве ответа приложите скриншоты консоли, где видно все введенные команды и их вывод.
 
+## Ответ 2
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/1.png)
 
 ## Задача 3
 1. Воспользуйтесь docker help или google, чтобы узнать как подключиться к стандартному потоку ввода/вывода/ошибок контейнера "custom-nginx-t2".
@@ -56,6 +63,12 @@ Hey, Netology
 
 В качестве ответа приложите скриншоты консоли, где видно все введенные команды и их вывод.
 
+## Ответ 3
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/2.png)
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/3.png)
+
 ## Задача 4
 
 
@@ -68,6 +81,9 @@ Hey, Netology
 
 В качестве ответа приложите скриншоты консоли, где видно все введенные команды и их вывод.
 
+## Ответ 4
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/4.png)
 
 ## Задача 5
 
@@ -114,6 +130,16 @@ services:
 8. Удалите файл docker-compose.yaml.  Выполните команду "docker-compose up -d". Прочитайте warning, объясните суть предупреждения и выполните предложенное действие. Погасите тестовый стенд.
 
 В качестве ответа приложите скриншоты консоли, где видно все введенные команды и их вывод.
+
+## Ответ 5
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/5.png)
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/6.png)
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/7.png)
+
+
 
 ---
 
