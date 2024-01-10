@@ -69,6 +69,10 @@ Hey, Netology
 
 ![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/3.png)
 
+### Суть Возникшей Проблемы
+
+Проблема заключается в несоответствии между прослушиваемым портом внутри контейнера (81 после изменения) и пробросом портов на хосте (который все еще настроен на 80). Это приводит к тому, что попытки доступа к контейнеру по порту 8080 на хосте не удаются, так как этот порт не связан с активным портом контейнера.
+
 ## Задача 4
 
 
@@ -133,12 +137,16 @@ services:
 
 ## Ответ 5
 
+
 ![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/5.png)
 
 ![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/6.png)
 
 ![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-03-docker-intro/img/7.png)
 
+### Суть Предупреждения
+
+Когда мы устанавливаем переменную окружения COMPOSE_FILE для указания на использование нескольких файлов конфигурации, Docker Compose ожидает наличия всех этих файлов. Если один из файлов отсутствует (в данном случае compose.yaml), Docker Compose выдает предупреждение о том, что ожидаемый файл конфигурации не найден. Это означает, что Docker Compose не может использовать этот файл для конфигурации и запуска контейнеров.
 
 
 ---
