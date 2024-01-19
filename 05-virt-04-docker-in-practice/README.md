@@ -15,7 +15,7 @@
 
 ## Ответ 1
 
-### Dockerfile
+### Dockerfile.python
 ```
 # Используем базовый образ python:3.9-slim
 FROM python:3.9-slim
@@ -68,6 +68,52 @@ __pycache__
 4. Подключитесь к БД mysql с помощью команды ```docker exec <имя_контейнера> mysql -uroot -p<пароль root-пользователя>``` . Введите последовательно команды (не забываем ```;``` ): ```show databases; use <имя вашей базы данных(по-умолчанию example)>; show tables; select * from requests;```.
 
 5. Остановите проект и закомитьте все изменения в свой fork-репозиторий. В качестве ответа приложите скриншот таблицы ```requests```.
+
+## Ответ 2
+
+### compose.yaml
+
+```
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    networks:
+      backend:
+        ipv4_address: 172.20.0.5
+    restart: always
+    environment:
+      DB_HOST: db
+      DB_USER: app
+      DB_PASSWORD: very_strong
+      DB_NAME: example
+
+  db:
+    image: mysql:8
+    networks:
+      backend:
+        ipv4_address: 172.20.0.10
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: very_strong
+      MYSQL_DATABASE: example
+      MYSQL_USER: app
+      MYSQL_PASSWORD: very_strong
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.20.0.0/16
+```
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-04-docker-in-practice/img/2.png)
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-04-docker-in-practice/img/3.png)
+
 
 ## Задача 3
 1. Запустите в Yandex Cloud ВМ согласно инструкциям (вам хватит 2 Гб Ram).
