@@ -13,6 +13,46 @@
 2. **Необязательно.** Изучите инструкцию проекта и запустите приложение без использования docker в venv. (Mysql БД можно запустить в docker run).   
 3. Создайте файл ```Dockerfile.python``` для сборки данного проекта. Используйте базовый образ ```python:3.9-slim``` Протестируйте корректность сборки. Не забудьте dockerignore.    
 
+## Ответ 1
+
+### Dockerfile
+```
+# Используем базовый образ python:3.9-slim
+FROM python:3.9-slim
+
+# Установим рабочую директорию в контейнере
+WORKDIR /app
+
+# Копируем файлы проекта в рабочую директорию
+COPY . /app
+
+# Установим зависимости из файла requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Определяем переменные среды для подключения к базе данных
+ENV DB_HOST=new-mysql-db \
+    DB_USER=app \
+    DB_PASSWORD=very_strong \
+    DB_NAME=example
+
+# Открываем порт 5000
+EXPOSE 5000
+
+# Запускаем приложение
+CMD ["python", "main.py"]
+```
+
+### dockerignore
+
+```
+venv
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+```
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-04-docker-in-practice/img/1.png)
+
 ## Задача 2
 1. Создайте файл ```compose.yaml```. Опишите в нем следующие сервисы: 
 
