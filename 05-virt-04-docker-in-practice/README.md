@@ -119,8 +119,56 @@ networks:
 1. Запустите в Yandex Cloud ВМ согласно инструкциям (вам хватит 2 Гб Ram).
 2. Установите стек docker приложений.
 3. Напишите bash-скрипт, который скачает ваш fork-репозиторий в каталог /opt и запустит проект целиком.
-4. Зайдите на сайт проверки http подключений, например(или аналогичный): ```https://check-host.net/check-http``` и проверьте ваш адрес ```http://<внешний_IP-адрес_вашей_ВМ>:5000```.
+4. Зайдите на сайт проверки http подключений, например(или аналогичный): ```https://check-host.net/check-http``` и проверьте ваш адрес ``http://<внешний_IP-адрес_вашей_ВМ>:5000```.
 5. В качестве ответа приложите скриншот таблицы ```requests``` с данного сервера и bash-скрипт.
+
+## Ответ 3
+
+### bash-скрипт
+
+```
+#!/bin/bash
+
+# Устанавливаем Docker, если он еще не установлен
+if ! command -v docker &> /dev/null
+then
+    echo "Установка Docker..."
+    sudo apt-get update
+    sudo apt-get install -y docker.io
+fi
+
+# Устанавливаем Docker Compose, если он еще не установлен
+if ! command -v docker-compose &> /dev/null
+then
+    echo "Установка Docker Compose..."
+    sudo curl -L "https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+fi
+
+# Клонируем репозиторий, если он еще не клонирован
+if [ ! -d "/opt/shvirtd-example-python" ] ; then
+    echo "Клонирование репозитория..."
+    sudo git clone https://github.com/shatskiy-O/shvirtd-example-python /opt/shvirtd-example-python
+else
+    echo "Репозиторий уже клонирован."
+    cd /opt/shvirtd-example-python
+    sudo git pull
+fi
+
+# Переходим в директорию проекта
+cd /opt/shvirtd-example-python
+
+# Добавляем проброс порта для веб-сервиса в compose.yaml
+sudo sed -i '/web:/a \    ports:\n      - "5000:5000"' compose.yaml
+
+# Запускаем проект
+echo "Запуск проекта..."
+sudo docker-compose -f compose.yaml -f proxy.yaml up -d
+```
+
+![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-04-docker-in-practice/img/4.png)
+
 
 ### Правила приема
 
