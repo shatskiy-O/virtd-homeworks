@@ -31,8 +31,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Определяем переменные среды для подключения к базе данных
 ENV DB_HOST=new-mysql-db \
-    DB_USER=app \
-    DB_PASSWORD=very_strong \
+    DB_USER= \
+    DB_PASSWORD= \
     DB_NAME=example
 
 # Открываем порт 5000
@@ -72,7 +72,8 @@ __pycache__
 ## Ответ 2
 
 ### compose.yaml
-
+я использую тут порт 8091 так как у меня порт 8090 уже занят . Все отсальное поправил согласно замечаниям. Доступы убрали и добавил проброc в compose.yaml
+ 
 ```
 version: '3.8'
 
@@ -86,10 +87,12 @@ services:
         ipv4_address: 172.20.0.5
     restart: always
     environment:
-      DB_HOST: db
-      DB_USER: app
-      DB_PASSWORD: very_strong
-      DB_NAME: example
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    ports:
+      - "8091:5000"
 
   db:
     image: mysql:8
@@ -98,29 +101,29 @@ services:
         ipv4_address: 172.20.0.10
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: very_strong
-      MYSQL_DATABASE: example
-      MYSQL_USER: app
-      MYSQL_PASSWORD: very_strong
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
 
 networks:
   backend:
     driver: bridge
     ipam:
-     config:
-       - subnet: 172.20.0.0/16
+      config:
+        - subnet: 172.20.0.0/16
+
+
 ```
 ![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-04-docker-in-practice/img/2.png)
-
-![alt text](https://github.com/shatskiy-O/virtd-homeworks/blob/shvirtd-1/05-virt-04-docker-in-practice/img/3.png)
-
 
 ## Задача 3
 1. Запустите в Yandex Cloud ВМ согласно инструкциям (вам хватит 2 Гб Ram).
 2. Установите стек docker приложений.
 3. Напишите bash-скрипт, который скачает ваш fork-репозиторий в каталог /opt и запустит проект целиком.
-4. Зайдите на сайт проверки http подключений, например(или аналогичный): ```https://check-host.net/check-http``` и проверьте ваш адрес ``http://<внешний_IP-адрес_вашей_ВМ>:5000```.
-5. В качестве ответа приложите скриншот таблицы ```requests``` с данного сервера и bash-скрипт.
+4. Зайдите на сайт проверки http подключений, например(или аналогичный): ```https://check-host.net/check-http
+``` и проверьте ваш адрес ``http://<внешний_IP-адрес_вашей_ВМ>:5000```.
+1. В качестве ответа приложите скриншот таблицы ```requests``` с данного сервера и bash-скрипт.
 
 ## Ответ 3
 
@@ -158,9 +161,6 @@ fi
 
 # Переходим в директорию проекта
 cd /opt/shvirtd-example-python
-
-# Добавляем проброс порта для веб-сервиса в compose.yaml
-sudo sed -i '/web:/a \    ports:\n      - "5000:5000"' compose.yaml
 
 # Запускаем проект
 echo "Запуск проекта..."
